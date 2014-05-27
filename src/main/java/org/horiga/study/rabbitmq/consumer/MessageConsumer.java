@@ -1,5 +1,7 @@
 package org.horiga.study.rabbitmq.consumer;
 
+import javax.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,15 @@ public class MessageConsumer {
 	AnnotationConfigApplicationContext context;
 	
 	public void handleMessage(String message) {
-        log.error("handleMessage <" + message + ">");
-        // this.context.close(); // with shutdown application
+        log.error("### handleMessage <" + message + ">");
+        /*
+         * do anything...
+         */
+	}
+	
+	@PreDestroy
+	public void releaseResources() {
+		log.info("AMQP consumer : releaseResources");
+		this.context.close();
 	}
 }

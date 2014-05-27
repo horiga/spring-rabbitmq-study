@@ -1,6 +1,6 @@
 package org.horiga.study.rabbitmq;
 
-import org.horiga.study.rabbitmq.publisher.MessagePublisher;
+import org.horiga.study.rabbitmq.producer.MessageProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class Application implements CommandLineRunner {
 	private static Logger log = LoggerFactory.getLogger(Application.class);
 	
 	@Autowired
-	MessagePublisher publisher;
+	MessageProducer producer;
 	
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -29,7 +29,7 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		log.debug("RabbitMQ test/start");
-		publisher.publishMessage("Hello world.");
+		producer.publishMessage("Hello world.");
 		log.debug("RabbitMQ test/end");
 	}
 }
