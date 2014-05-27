@@ -12,6 +12,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +21,14 @@ public class MessagePublisher {
 
 	private static Logger log = LoggerFactory.getLogger(MessagePublisher.class);
 
-	//@Value("amqp.publisher.default.queueName")
-	static String queueName = "sb-queue";
-
-	//@Value("amqp.publisher.default.exchangeName")
-	static String exchangeName = "sb-exchange";
-
+	@Value("amqp.publisher.default.queueName")
+	String queueName;
+	//static String queueName = "sb-queue";
+	
+	@Value("amqp.publisher.default.exchangeName")
+	String exchangeName;
+	//static String exchangeName = "sb-exchange";
+	
 	static boolean autoDelete = true; // default value is 'false'
 
 	static boolean durable = true; // default is 'true'
@@ -79,7 +82,7 @@ public class MessagePublisher {
 	public void publishMessage(String message) throws Exception {
 		Thread.sleep(5000);
 		String routingKey = queueName;
-		log.debug("send message...");
+		log.info("send message...");
 		rabbitTemplate.convertAndSend(routingKey, message);
 	}
 }
